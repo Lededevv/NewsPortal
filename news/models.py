@@ -11,37 +11,12 @@ class Author(models.Model):
     rating = models.FloatField(default=0.0)
 
     def update_rating(self):
-        # все посты автора
-        posts_a = self.post_set.all()
-        # если у автора есть статья или новость
-        if posts_a:
-            r_p = 3 * posts_a.aggregate(total_rating=Sum('rating_post'))['total_rating']
-            sum_rating = 0
-            # сумма рейтингов комментариев ко всем постам
-            for post in posts_a:
-                post_com = post.comment_set.all()
-                # если есть комментарии к посту
-                if post_com:
-                    sum_rating += post_com.aggregate(total_rating=Sum('rating_com'))['total_rating']
-                # если есть новость,  но нет комментария к ней
-                else:
-                    sum_rating += 0
-        # если нет новости и статьи
-        else:
-            r_p = 0
-            sum_rating = 0
+        post_rating = Post.objects.filter(author= self).aggregate(Sum('rating_post'))['rating_post__sum'] or 0
+        comment_rating = Comment.objects.filter(user = self.user).aggregate(comment_rating_sum=Sum('rating_com'))['comment_rating_sum'] or 0
+        post_comment_rating = Comment.objects.filter(post__author= self).aggregate(Sum('rating_com'))['rating_com__sum'] or 0
 
-        user_a = User.objects.get(pk=self.user_id)
-        # комментарии автора
-        comment_a = user_a.comment_set.all()
-       # если автор оставлял комментарии
-        if comment_a:
-            r_c = comment_a.aggregate(total_rating=Sum('rating_com'))['total_rating']
-        # если автор не оставлял комментарии
-        else:
-            r_c = 0
 
-        self.rating = sum_rating + r_p + r_c
+        self.rating = 3*post_rating + comment_rating + post_comment_rating
         self.save()
 
 
