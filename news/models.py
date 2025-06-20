@@ -1,76 +1,1 @@
-from django.contrib.auth.models import User
-from django.db import models
-# from datetime import datetime, timezone
-
-from django.db.models import Sum, Count
-from django.template.defaulttags import comment
-
-
-class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    rating = models.FloatField(default=0.0)
-
-    def update_rating(self):
-        post_rating = Post.objects.filter(author= self).aggregate(Sum('rating_post'))['rating_post__sum'] or 0
-        comment_rating = Comment.objects.filter(user = self.user).aggregate(comment_rating_sum=Sum('rating_com'))['comment_rating_sum'] or 0
-        post_comment_rating = Comment.objects.filter(post__author= self).aggregate(Sum('rating_com'))['rating_com__sum'] or 0
-
-
-        self.rating = 3*post_rating + comment_rating + post_comment_rating
-        self.save()
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-
-
-class Post(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    article = models.BooleanField(default=False)
-    time_in = models.DateTimeField(auto_now_add=True)
-    category = models.ManyToManyField(Category, through='PostCategory')
-    heading = models.CharField(max_length=255, unique=True)
-    text = models.TextField()
-    rating_post = models.FloatField(default=0.0)
-
-    def like(self):
-
-        self.rating_post += 1
-        self.save()
-
-    def dislike(self):
-        if self.rating_post > 0:
-            self.rating_post -= 1
-            self.save()
-        else:
-            self.rating_post = 0
-            self.save()
-
-    def preview(self):
-        return self.text[0:124] + "..."
-
-
-class PostCategory(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-
-class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.CharField(max_length=255)
-    time_create = models.DateTimeField(auto_now_add=True)
-    rating_com = models.FloatField(default=0.0)
-
-    def like(self):
-        self.rating_com += 1
-        self.save()
-
-    def dislike(self):
-
-        if self.rating_com > 0:
-            self.rating_com -= 1
-            self.save()
-        else:
-            self.rating_com = 0
-            self.save()
+from django.contrib.auth.models import Userfrom django.db import models# from datetime import datetime, timezonefrom django.db.models import Sum, Countfrom django.template.defaulttags import commentclass Author(models.Model):    user = models.OneToOneField(User, on_delete=models.CASCADE)    rating = models.FloatField(default=0.0)    def update_rating(self):        post_rating = Post.objects.filter(author= self).aggregate(Sum('rating_post'))['rating_post__sum'] or 0        comment_rating = Comment.objects.filter(user = self.user).aggregate(comment_rating_sum=Sum('rating_com'))['comment_rating_sum'] or 0        post_comment_rating = Comment.objects.filter(post__author= self).aggregate(Sum('rating_com'))['rating_com__sum'] or 0        self.rating = 3*post_rating + comment_rating + post_comment_rating        self.save()class Category(models.Model):    name = models.CharField(max_length=50, unique=True)class Post(models.Model):    author = models.ForeignKey(Author, on_delete=models.CASCADE)    article = models.BooleanField(default=False)    time_in = models.DateTimeField(auto_now_add=True)    category = models.ManyToManyField(Category, through='PostCategory')    heading = models.CharField(max_length=255, unique=True)    text = models.TextField()    rating_post = models.FloatField(default=0.0)    def like(self):        self.rating_post += 1        self.save()    def dislike(self):        if self.rating_post > 0:            self.rating_post -= 1            self.save()        else:            self.rating_post = 0            self.save()    def preview(self):        return self.text[0:124] + "..."class PostCategory(models.Model):    post = models.ForeignKey(Post, on_delete=models.CASCADE)    category = models.ForeignKey(Category, on_delete=models.CASCADE)class Comment(models.Model):    post = models.ForeignKey(Post, on_delete=models.CASCADE)    user = models.ForeignKey(User, on_delete=models.CASCADE)    text = models.CharField(max_length=255)    time_create = models.DateTimeField(auto_now_add=True)    rating_com = models.FloatField(default=0.0)    def like(self):        self.rating_com += 1        self.save()    def dislike(self):        if self.rating_com > 0:            self.rating_com -= 1            self.save()        else:            self.rating_com = 0            self.save()
