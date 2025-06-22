@@ -1,0 +1,40 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}!
+<!-- Подключаем новый файл с нашим тегом -->
+{% load custom_tags %}
+{% block title %}
+Products
+{% endblock title %}
+
+{% block content %}
+   <h1>Все новости</h1>
+   <!-- Используем переданную из представления переменную time_now
+   и применяем к ней фильтр date. По назначению этот фильтр очень похож
+   на метод strftime у объекта datetime в Python — вывод времени
+   в указанном формате. -->
+   <h3>{% current_time '%d %b  %Y' %}  news: {{posts|length}} шт</h3>
+   <hr>
+   {% if posts %}
+       <table>
+           <tr>
+               <td>Заголовок</td>
+               <td>Дата публикации</td>
+               <td>Текст</td>
+
+           </tr>
+
+           {% for post in posts %}
+           <tr>
+               <td>{{ post.heading |censor}}</td>
+               <td>{{ post.time_in|date:'d M Y'}}</td>
+               <td>{{ post.text|truncatechars:21|censor }}</td>
+
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>Товаров нет!</h2>
+   {% endif %}
+{% endblock content %}
