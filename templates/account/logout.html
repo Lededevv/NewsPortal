@@ -1,0 +1,13 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}Выход из аккаунта{% endblock %}
+
+{% block content %}
+<h1>Выход</h1>
+
+<form method="POST" action="{% url 'account_logout' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Выйти</button>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+<!-- templates/account/sign_up.html -->
+
+{% extends 'flatpages/default.html' %}
+{% load socialaccount %}
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<h1>Регистрация нового аккаунта</h1>
+
+<form method="POST" action="{% url 'account_signup' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+</form>
+<h2>Регистрация через:</h2>
+{% get_providers as socialaccount_providers %}
+
+{% for provider in socialaccount_providers %}
+    <p><a href="{% provider_login_url provider.id process='signup' scope=scope auth_params=auth_params %}">{{ provider.name }}</a></p>
+{% endfor %}
+{% endblock %}
+
+
+

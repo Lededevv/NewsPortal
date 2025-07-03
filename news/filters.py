@@ -9,7 +9,7 @@ from .models import Post, User
 
 
 
-class PostFilter(django_filters.FilterSet):
+class PostFilter(FilterSet):
     heading = django_filters.CharFilter(field_name="heading",
                                         lookup_expr="icontains",
                                         label="Заголовок")

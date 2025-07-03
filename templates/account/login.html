@@ -1,0 +1,21 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}Вход в аккаунт{% endblock %}
+{% load socialaccount %}
+{% block content %}
+<h1>Вход в аккаунт</h1>
+
+<form method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Войти</button>
+</form>
+<h2>вход через:</h2>
+{% get_providers as socialaccount_providers %}
+
+{% for provider in socialaccount_providers %}
+    <p><a href="{% provider_login_url provider.id process='signup' scope=scope auth_params=auth_params %}">{{ provider.name }}</a></p>
+{% endfor %}
+
+<a  href="{% url 'account_signup' %}">Зарегистрироваться</a>
+{% endblock %}
