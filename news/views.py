@@ -87,8 +87,8 @@ class PostCreate(PermissionRequiredMixin, CreateView):
         return context
 
 
-class PostUpdate(LoginRequiredMixin, UpdateView):
-
+class PostUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission_required = 'news.change_post'
     form_class = PostForm
     model = Post
     template_name = 'news_edit.html'
@@ -119,8 +119,8 @@ class ArticleCreate(PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ArticleUpdate(LoginRequiredMixin, UpdateView):
-
+class ArticleUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission_required = 'news.change_post'
     form_class = PostForm
     model = Post
     template_name = 'news_edit.html'
