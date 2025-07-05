@@ -1,7 +1,7 @@
 from django.urls import path
 # Импортируем созданное нами представление
 from .views import PostsList, PostDetail, PostSearch, PostUpdate, ArticleCreate, PostCreate, ArticleUpdate, PostDelete, \
-   ArticleDelete, upgrade_me
+   ArticleDelete, upgrade_me, subscribe_to_category, unsubscribe_from_category
 
 urlpatterns = [
    # path — означает путь.
@@ -22,6 +22,9 @@ urlpatterns = [
    path('articles/create/', ArticleCreate.as_view(), name = 'article_create'),
    path('articles/<int:pk>/edit/', ArticleUpdate.as_view(), name='article_update'),
    path('articles/<int:pk>/delete/', ArticleDelete.as_view(), name='post_delete'),
-   path('upgrade/', upgrade_me, name = 'upgrade')
-
+   path('upgrade/', upgrade_me, name = 'upgrade'),
+   path('categories/<int:category_id>/subscribe/', subscribe_to_category, name='subscribe_to_category'),
+   path('categories/<int:category_id>/unsubscribe/', unsubscribe_from_category, name='unsubscribe_from_category'),
 ]
+
+

@@ -1,8 +1,6 @@
 {% extends 'flatpages/default.html' %}
 
-
-{% load custom_filters %}!
-<!-- Подключаем новый файл с нашим тегом -->
+{% load custom_filters %}
 {% load custom_tags %}
 
 {% block title %}
@@ -10,14 +8,40 @@ Post
 {% endblock title %}
 
 {% block content %}
-   <h1>Публикация</h1>
+<h1>Публикация</h1>
 
+<h3>{{ post.heading }}</h3>
+<hr>
+<h3>{{ post.text|censor }}</h3>
+<h4>Дата публикации: {{ post.time_in|date:'d M Y' }}</h4>
 
-        <h3>{{ post.heading }} </h3>
- <hr>
-             <h3>{{ post.text|censor }}</h3>
-
-           <h4>дата публикации :{{ post.time_in|date:'d M Y' }}</h4>
-
+{% if is_authenticated %}
+    <h4>Категории:</h4>
+    <ul>
+        {% for category in categories %}
+            <li>
+                {{ category.name }}
+                {% if user not in category.subscribers.all %}
+                    <form method="post" action="{% url 'subscribe_to_category' category.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="post_pk" value="{{ post.id }}">
+                        <button type="submit" class="btn btn-sm btn-outline-info">
+                            Подписаться на категорию
+                        </button>
+                    </form>
+                {% else %}
+                    <span class="text-success">Вы уже подписаны на эту категорию</span>
+                    <form method="post" action="{% url 'unsubscribe_from_category' category.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="post_pk" value="{{ post.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm ml-2">
+                            Отписаться
+                        </button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 {% endblock content %}

@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
@@ -8,8 +10,27 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .filters import PostFilter
 from .forms import PostForm
-from .models import Post
+from .models import Post, Category
 
+@login_required
+def unsubscribe_from_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    user = request.user
+    if user in category.subscribers.all():
+        category.subscribers.remove(user)
+        messages.success(request, 'Вы успешно отписались от категории.')
+    else:
+        messages.warning(request, 'Вы не были подписаны на эту категорию.')
+
+    return redirect('post_detail', pk=request.POST.get('post_pk'))
+
+@login_required
+def subscribe_to_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    user = request.user
+    if user not in category.subscribers.all():
+        category.subscribers.add(user)
+    return redirect('post_detail', pk=request.POST.get('post_pk'))
 
 @login_required
 def upgrade_me(request):
@@ -73,6 +94,7 @@ class PostDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_authenticated'] = self.request.user.is_authenticated
+        context['categories'] = self.object.category.all()  # Важно вызвать метод all()
         return context
 
 
@@ -104,6 +126,13 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
     form_class = PostForm
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_authenticated'] = self.request.user.is_authenticated
+        # Получаем категории, относящиеся к посту
+        context['categories'] = self.object.category.all()
+        return context
 
 
 class ArticleCreate(PermissionRequiredMixin, CreateView):
