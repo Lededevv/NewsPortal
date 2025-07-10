@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
@@ -10,7 +11,8 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .filters import PostFilter
 from .forms import PostForm
-from .models import Post, Category
+from .models import Post, Category, Author
+
 
 @login_required
 def unsubscribe_from_category(request, category_id):
@@ -38,6 +40,8 @@ def upgrade_me(request):
     author_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         author_group.user_set.add(user)
+        print(user.pk)
+        Author.objects.create(user_id = user.pk)
     return redirect('/news')
 
 
@@ -103,6 +107,23 @@ class PostCreate(PermissionRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
     template_name = 'news_edit.html'
+
+    def form_valid(self, form):
+        categories = form.cleaned_data['categories']
+
+
+        try:
+            post = form.save(commit=False)
+            post.author = Author.objects.get(user=self.request.user)  # устанавливаем автора
+            post.save()  # пробуем сохранить пост
+            post.category.add(*categories)
+
+
+            return super().form_valid(form)
+        except ValidationError as e:
+            # Ошибка превышения дневного лимита публикаций
+            messages.error(self.request, str(e))
+            return self.form_invalid(form)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_authenticated'] = self.request.user.is_authenticated

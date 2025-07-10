@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Post
+from .models import Post, Category
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import Group
 
@@ -40,21 +40,31 @@ class BasicSignupForm(SignupForm):
         return user
 
 class PostForm(forms.ModelForm):
-    text = forms.CharField(min_length=20)
+    categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = Post
         fields = [
             'heading',
-            'author',
             'text',
-
+            'categories',  # Новое поле категорий
         ]
         labels = {
             'heading': 'Заголовок',
-            'author': 'Автор',
-            'text' : 'Текст'
+            'text': 'Текст',
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        text = cleaned_data.get("text")
+        heading = cleaned_data.get("heading")
+
+        if heading == text:
+            raise ValidationError(
+                "Описание не должно быть идентично заголовку."
+            )
+
+        return cleaned_data
 
 
     def clean(self):
