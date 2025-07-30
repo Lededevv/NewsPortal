@@ -1,0 +1,6 @@
+<!-- emails/weekly_digest.txt -->
+Привет! Вот последние новости:
+{% for post in posts %}
+* {{ post.heading }} - {{ post.get_absolute_url }}
+{% endfor %}
+Спасибо за прочтение!

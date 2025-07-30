@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Новости портала</title>
+</head>
+<body>
+<h1>Новые статьи за прошедшую неделю</h1>
+
+{% for post in posts %}
+<div style="margin-bottom: 1em; border-bottom: 1px dashed gray; padding-bottom: 1em;">
+    <h3>{{ post.heading }}</h3>
+    <a href="{{ post.get_absolute_url }}">Читать далее...</a>
+</div>
+{% empty %}
+<p>Нет новых статей за прошедшую неделю в ваших категориях.</p>
+{% endfor %}
+
+<p>Желаем приятного чтения!</p>
+</body>
+</html>

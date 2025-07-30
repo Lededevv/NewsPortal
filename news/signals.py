@@ -29,32 +29,40 @@ logger = logging.getLogger(__name__)
 
 def send_notification(instance):
     categories = instance.category.all()
+    print('categories')
     recipients = set()  # уникальный набор email подписчиков
 
     # Собираем подписчиков каждой категории
     for category in categories:
         subscribers = category.subscribers.all()
+        print(subscribers)
         for subscriber in subscribers:
             recipients.add(subscriber.email)
-
+    print(recipients)
     if len(recipients) > 0:
         subject = f"{instance.heading}"  # тема письма равна заголовку поста
         event_type = "Новое"
         text_body = f'{instance.text[:50]}...'  # первые 50 символов текста
         category_names = ', '.join([cat.name for cat in categories])  # список категорий
+        post_link = instance.get_absolute_url()  # Получаем относительный URL
+
+
+        domain = settings.SITE_DOMAIN  # пример: 'http://example.com'
+        absolute_post_link = f"{domain}{post_link}"
 
         # Формирование письма
         for email in recipients:
             user = next((sub for sub in subscribers if sub.email == email), None)
             if not user:
                 continue  # пропускаем пользователя, если не найден
-
+            print("send")
             html_message = render_to_string('message_template.html', {
                 'type_event': event_type,
                 'username': user.username,
                 'categories': category_names,
                 'subject': subject,
-                'body_text': text_body
+                'body_text': text_body,
+                'post_link': absolute_post_link  # Передаем полную ссылку'
             })
 
             # Создание и отправка письма
