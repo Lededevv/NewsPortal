@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.core.cache import cache
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
@@ -100,6 +100,21 @@ class PostDetail(DetailView):
         context['is_authenticated'] = self.request.user.is_authenticated
         context['categories'] = self.object.category.all()  # Важно вызвать метод all()
         return context
+
+    def get_object(self, *args, **kwargs):  # переопределяем метод получения объекта, как ни странно
+
+        obj = cache.get(f'post-{self.kwargs["pk"]}',
+                        None)  # кэш очень похож на словарь, и метод get действует так же. Он забирает значение по ключу, если его нет, то забирает None.
+
+        # если объекта нет в кэше, то получаем его и записываем в кэш
+
+        if not obj:
+            print("запись изменения в кеш")
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+
+        return obj
+
 
 
 class PostCreate(PermissionRequiredMixin, CreateView):
