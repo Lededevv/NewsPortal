@@ -1,0 +1,63 @@
+2025-08-31 15:05:34,254 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 15:08:13,571 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 15:13:44,956 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 15:17:52,344 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 15:44:10,742 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 15:44:12,035 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 15:45:43,217 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 15:45:44,499 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 15:51:18,044 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 15:58:01,983 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 15:58:03,539 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:05:06,187 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:05:12,023 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:06:07,866 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:06:09,102 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:06:30,378 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:06:31,631 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:07:42,005 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:08:51,375 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:10:30,833 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:10:51,436 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:10:57,326 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:12:04,322 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:12:05,602 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:12:37,327 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:12:38,817 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:26:10,840 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:27:56,585 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:27:57,937 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:40:39,881 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:41:10,097 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:42:46,510 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:42:47,788 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:43:33,099 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:43:34,378 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:48:47,622 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 16:56:04,828 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 16:56:10,224 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:02:14,804 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:02:16,215 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:02:32,298 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:02:33,640 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:04:49,458 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:04:50,796 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:05:58,841 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:06:00,397 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:18:02,711 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:20:35,960 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:23:03,167 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:23:07,848 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:26:00,957 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:26:02,277 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:26:31,790 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:28:08,935 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:28:10,245 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:29:38,183 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:31:55,854 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:33:42,113 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:34:35,567 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:34:36,796 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:35:05,307 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
+2025-08-31 17:35:06,573 INFO autoreload: Watching for file changes with StatReloader
+2025-08-31 17:36:20,877 INFO autoreload: C:\django-project\NewsPaper\NewsPaper\settings.py changed, reloading.
