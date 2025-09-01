@@ -79,6 +79,13 @@
   --bs-highlight-bg: #fff3cd;
 }
 
+.day-mode {
+  background-color: #fafafa !important; /* белый фон днем */
+}
+
+.night-mode {
+  background-color: #333 !important; /* черный фон ночью */
+}
 *,
 *::before,
 *::after {
@@ -99,10 +106,10 @@ body {
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);
-  background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 
 hr {
   margin: 1rem 0;

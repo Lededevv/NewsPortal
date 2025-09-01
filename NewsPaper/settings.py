@@ -18,140 +18,140 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-
-        'verbose': {
-            'format': '{asctime} {levelname} {pathname}:{lineno} {module}.{funcName}(): {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{asctime} {levelname} {message}',
-            'style': '{',
-        },
-        'common': {
-            'format': '{asctime} {levelname} {module}: {message}',
-            'style': '{',
-        },
-        'errors': {
-            'format': '{asctime} {levelname} {pathname}:{lineno} {message}\nStack Trace:\n{exc_text}',
-            'style': '{',
-        },
-        'email_errors': {
-            'format': '{asctime} {levelname} {pathname}:{lineno} {message}',
-            'style': '{',
-        },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-    },
-    'handlers': {
-
-
-        # Console Handler для всех сообщений уровня DEBUG и выше
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-            'filters': ['require_debug_true'],  # Показывать только при DEBUG = True
-        },
-
-        'warning_console': {
-            'level': 'WARNING',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-            'filters': ['require_debug_true'],  # Показывать только при DEBUG = True
-        },
-
-        'error_console': {
-            'level': 'ERROR',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-            'filters': ['require_debug_true'],  # Показывать только при DEBUG = True
-        },
-        # Общий файл для сообщений INFO и выше
-        'general_file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': 'general.log',
-            'formatter': 'common',
-            'filters': ['require_debug_false'],  # Отправлять только при DEBUG = False
-        },
-        # Новый файл для сообщений ERROR и CRITICAL
-        'errors_file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': 'errors.log',
-            'formatter': 'errors',
-            'delay': True,  # Откладывает открытие файла до первой записи
-        },
-        # Новый файл для сообщений уровня SECURITY
-        'security_file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': 'security.log',
-            'formatter': 'common',
-        },
-        # Email-обработчик для сообщений ERROR и выше
-        'email_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'formatter': 'email_errors',
-            'include_html': True,  # HTML-версия письма (если включено)
-            'filters': ['require_debug_false'],  # Отправлять только при DEBUG = False
-        },
-    },
-    'loggers': {
-        # Основной логгер для всего проекта
-        'django': {
-            'handlers': [
-                'console',           # Консольный вывод для сообщений DEBUG и выше
-                'warning_console',   # Консольный вывод для сообщений WARNING и выше
-                'error_console',     # Консольный вывод для сообщений ERROR и CRITICAL
-                'general_file',      # Общий файл для сообщений INFO и выше
-            ],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        # Логгер для запросов
-        'django.request': {
-            'handlers': ['errors_file', 'email_admins'],  # Сообщения ERROR и выше идут в errors.log и почтой
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        # Логгер сервера
-        'django.server': {
-            'handlers': ['errors_file', 'email_admins'],  # Сообщения ERROR и выше идут в errors.log и почтой
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        # Логгер шаблонов
-        'django.template': {
-            'handlers': ['errors_file'],  # Только сообщения ERROR и CRITICAL в errors.log
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        # Логгер базы данных
-        'django.db.backends': {
-            'handlers': ['errors_file'],  # Только сообщения ERROR и CRITICAL в errors.log
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        # Логгер для вопросов безопасности
-        'django.security': {
-            'handlers': ['security_file'],  # Только сообщения в security.log
-            'level': 'INFO',
-            'propagate': False,
-        },
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#
+#         'verbose': {
+#             'format': '{asctime} {levelname} {pathname}:{lineno} {module}.{funcName}(): {message}',
+#             'style': '{',
+#         },
+#         'simple': {
+#             'format': '{asctime} {levelname} {message}',
+#             'style': '{',
+#         },
+#         'common': {
+#             'format': '{asctime} {levelname} {module}: {message}',
+#             'style': '{',
+#         },
+#         'errors': {
+#             'format': '{asctime} {levelname} {pathname}:{lineno} {message}\nStack Trace:\n{exc_text}',
+#             'style': '{',
+#         },
+#         'email_errors': {
+#             'format': '{asctime} {levelname} {pathname}:{lineno} {message}',
+#             'style': '{',
+#         },
+#     },
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse',
+#         },
+#     },
+#     'handlers': {
+#
+#
+#         # Console Handler для всех сообщений уровня DEBUG и выше
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple',
+#             'filters': ['require_debug_true'],  # Показывать только при DEBUG = True
+#         },
+#
+#         'warning_console': {
+#             'level': 'WARNING',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose',
+#             'filters': ['require_debug_true'],  # Показывать только при DEBUG = True
+#         },
+#
+#         'error_console': {
+#             'level': 'ERROR',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose',
+#             'filters': ['require_debug_true'],  # Показывать только при DEBUG = True
+#         },
+#         # Общий файл для сообщений INFO и выше
+#         'general_file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': 'general.log',
+#             'formatter': 'common',
+#             'filters': ['require_debug_false'],  # Отправлять только при DEBUG = False
+#         },
+#         # Новый файл для сообщений ERROR и CRITICAL
+#         'errors_file': {
+#             'level': 'ERROR',
+#             'class': 'logging.FileHandler',
+#             'filename': 'errors.log',
+#             'formatter': 'errors',
+#             'delay': True,  # Откладывает открытие файла до первой записи
+#         },
+#         # Новый файл для сообщений уровня SECURITY
+#         'security_file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': 'security.log',
+#             'formatter': 'common',
+#         },
+#         # Email-обработчик для сообщений ERROR и выше
+#         'email_admins': {
+#             'level': 'ERROR',
+#             'class': 'django.utils.log.AdminEmailHandler',
+#             'formatter': 'email_errors',
+#             'include_html': True,  # HTML-версия письма (если включено)
+#             'filters': ['require_debug_false'],  # Отправлять только при DEBUG = False
+#         },
+#     },
+#     'loggers': {
+#         # Основной логгер для всего проекта
+#         'django': {
+#             'handlers': [
+#                 'console',           # Консольный вывод для сообщений DEBUG и выше
+#                 'warning_console',   # Консольный вывод для сообщений WARNING и выше
+#                 'error_console',     # Консольный вывод для сообщений ERROR и CRITICAL
+#                 'general_file',      # Общий файл для сообщений INFO и выше
+#             ],
+#             'level': 'DEBUG',
+#             'propagate': False,
+#         },
+#         # Логгер для запросов
+#         'django.request': {
+#             'handlers': ['errors_file', 'email_admins'],  # Сообщения ERROR и выше идут в errors.log и почтой
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         # Логгер сервера
+#         'django.server': {
+#             'handlers': ['errors_file', 'email_admins'],  # Сообщения ERROR и выше идут в errors.log и почтой
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         # Логгер шаблонов
+#         'django.template': {
+#             'handlers': ['errors_file'],  # Только сообщения ERROR и CRITICAL в errors.log
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         # Логгер базы данных
+#         'django.db.backends': {
+#             'handlers': ['errors_file'],  # Только сообщения ERROR и CRITICAL в errors.log
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         # Логгер для вопросов безопасности
+#         'django.security': {
+#             'handlers': ['security_file'],  # Только сообщения в security.log
+#             'level': 'INFO',
+#             'propagate': False,
+#         },
+#     }
+# }
 
 SITE_DOMAIN = 'http://127.0.0.1:8000'
 # Quick-start development settings - unsuitable for production
@@ -171,6 +171,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL= '/news/'
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -223,13 +224,15 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     'allauth.account.middleware.AccountMiddleware',
-     'django.middleware.locale.LocaleMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    'news.middlewares.TimezoneMiddleware',
+
 ]
 
 ROOT_URLCONF = 'NewsPaper.urls'
@@ -309,7 +312,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-LOCALE_PATH = [
+LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale')
 ]
 
@@ -331,3 +334,7 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR, 'cache_files'), # Указываем, куда будем сохранять кэшируемые файлы! Не забываем создать папку cache_files внутри папки с manage.py!
     }
 }
+LANGUAGES = [
+    ('ru', 'Русский'),
+    ('en', 'Английский'),
+]

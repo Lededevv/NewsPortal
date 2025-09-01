@@ -1,10 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.decorators.cache import cache_page
+
+from . import views
 # Импортируем созданное нами представление
 from .views import PostsList, PostDetail, PostSearch, PostUpdate, ArticleCreate, PostCreate, ArticleUpdate, PostDelete, \
-   ArticleDelete, upgrade_me, subscribe_to_category, unsubscribe_from_category, Index
+   ArticleDelete, upgrade_me, subscribe_to_category, unsubscribe_from_category, Index, Set_timezone
 
 urlpatterns = [
+   path('i18n/', include('django.conf.urls.i18n')),
    path('', Index.as_view(), name='index'),
    # path — означает путь.
    # В данном случае путь ко всем товарам у нас останется пустым,
@@ -28,6 +31,8 @@ urlpatterns = [
    path('upgrade/', upgrade_me, name = 'upgrade'),
    path('categories/<int:category_id>/subscribe/', subscribe_to_category, name='subscribe_to_category'),
    path('categories/<int:category_id>/unsubscribe/', unsubscribe_from_category, name='unsubscribe_from_category'),
+   path('set-timezone/', Set_timezone, name='set_timezone'),
+
 ]
 
 

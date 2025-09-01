@@ -1,19 +1,49 @@
-<!DOCTYPE html>
+{% load i18n %}
+{% load tz %}
+{% load custom_tags %}
+{% load custom_filters %}
+{% load static %}
 <html lang="en">
-   {% load cache %}
-       {% cache 60 header %}
-   <p>Это пример строки текста.</p>
+{% get_session_time as TIME_ZONE %}
+{% if TIME_ZONE.hour|is_string %}
+    <!-- Действия для строк -->
+    Строка!
+{% else %}
+    <!-- Действия для чисел или другого типа -->
+    Число или иной тип.
+
+{% endif %}
+    <script>
+   console.log("Current timezone:", "{{ TIME_ZONE }}")
+</script>
+
      <head>        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Bare - Start Bootstrap Template</title>
+
+       <!-- Если сейчас больше чем 19 или же меньше 7, то выводим тёмную тему, иначе выводим светлую -->
+       {% get_times as times %}
+   {% if TIME_ZONE.hour >= 19 or TIME_ZONE.hour <= 7 %}
+         <p>темно</p>
+         {%else%}
+         <p>светло</p>
+         {% endif %}
+
+</head>
+         <style>
+        *{
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+    </style>
+
         <!-- Favicon-->
         {% load static %}
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-    </head>
-    <body>
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+   <body class='{% if TIME_ZONE.hour >= 19 or TIME_ZONE.hour <= 7 %} night-mode {% else %} day-mode {% endif %}}'>
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
    <div class="container">
@@ -32,40 +62,76 @@
                    </a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="{% url 'post_search' %}">поиск</a>
+                   <a class="nav-link" href="{% url 'post_search' %}">{% trans "search" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href='/news/1'>post</a>
+                   <a class="nav-link" href='/news/1'>{% trans "Post" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/news/">posts</a>
+                   <a class="nav-link" href="/news/">{% trans "Posts" %}</a>
                </li>
                 <li class="nav-item">
-                   <a class="nav-link" href="{% url 'post_create' %}">опубликовать</a>
+                   <a class="nav-link" href="{% url 'post_create' %}">{% trans "to publish" %}</a>
                </li>
 
                {% if is_authenticated %}
                      <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account_logout' %}" >Выйти</a>
+                    <a class="nav-link" href="{% url 'account_logout' %}" >{% trans "Exit" %}</a>
                     {% else %}
 
-                        <a class="nav-link" href="{% url 'account_login' %}" >Войти</a>
+                        <a class="nav-link" href="{% url 'account_login' %}" >{% trans "Enter" %}</a>
                      {% endif %}
                </li>
 <li class="nav-item">
                {% if is_not_author and is_authenticated %}
 
-                <a class="nav-link" href="{% url 'upgrade' %}"> Стать автором!</a>
+                <a class="nav-link" href="{% url 'upgrade' %}"> {% trans "become an author" %}</a>
 
                    {% endif %}
  </li>
+
+
+               <form action="{% url 'set_language' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ redirect_to }}">
+
+    <select name="language" id="">
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% get_current_language as LANGUAGE_CODE %}
+        {% for language in languages %}
+            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                {{ language.name_local }} - {{ language.code }}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Set">
+</form>
+
 
            </ul>
        </div>
    </div>
 </nav>
-        <p>Это пример строки текста.</p>
-        {% endcache %}       <!-- Page content-->
+        <p>Это пример строки текста.{{times}}</p>
+
+    <form action="{% url 'set_timezone' %}" method="POST">
+        {% csrf_token %}
+        <label for="timezone-id">Time zone:</label>
+        <select id="timezone-id" name="timezone">
+            {% get_timezones as timezones%}
+            {% for tz in timezones %}
+            <p>{{tz}} = {{timezones}}</p>
+            <option value="{{ tz }}"{% if tz == times %} selected{% endif %}>{{ tz }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Set_timezone">
+    </form>
+
+    {{times}}
+        {{ TIME_ZONE }}
+        <!-- Отображаем время в выбранном часовом поясе  -->
+
 
        <div class="container">
                  <div class="row">

@@ -1,11 +1,14 @@
 from datetime import datetime
+
+import pytz
 from django.core.cache import cache
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import View
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -76,13 +79,21 @@ class PostsList(ListView):
     context_object_name = 'posts'
     paginate_by = 10
 
+
+
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_not_author'] = not self.request.user.groups.filter(name='authors').exists()
         context['is_authenticated'] = self.request.user.is_authenticated
-        context['time_now'] = datetime.utcnow()
+        context['time_now'] = timezone.now()
         context['next_sale'] = None
         context['filterset'] = self.filterset
+        context['current_time'] =  timezone.now(),
+        context['timezones'] = pytz.common_timezones
+
+
 
         return context
 
@@ -91,6 +102,26 @@ class PostsList(ListView):
         self.filterset = PostFilter(self.request.GET, queryset)
         return self.filterset.qs
 
+    def post(self,request):
+        if request.method == 'POST':
+            user_tz = request.POST.get('timezone')
+            if user_tz:
+                # Устанавливаем временную зону в сессии
+                request.session['django_timezone'] = user_tz
+                # Активируем выбранную временную зону
+                timezone.activate(pytz.timezone(user_tz))
+        return redirect('/news')
+
+def Set_timezone(request):
+    if request.method == 'POST':
+        user_tz = request.POST.get('timezone')
+        if user_tz:
+            # Записываем временную зону в сессию
+            request.session['django_timezone'] = user_tz
+            # Перенаправляем обратно на страницу новостей
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    return render(request, 'news.html')
 
 class PostDetail(DetailView):
     model = Post
@@ -216,6 +247,22 @@ class ArticleDelete(PermissionRequiredMixin, DeleteView):
 
 class Index(View):
     def get(self, request):
-        string = _('Hello world')
+        curent_time = timezone.now()
 
-        return HttpResponse(string)
+        # .  Translators: This message appears on the home page only
+        models = Post.objects.all()
+
+        context = {
+            'models': models,
+            'current_time': timezone.now(),
+            'timezones': pytz.common_timezones,  # добавляем в контекст все доступные часовые пояса
+
+        }
+
+        return HttpResponse(render(request, 'news.html', context))
+
+    #  по пост-запросу будем добавлять в сессию часовой пояс, который и будет обрабатываться написанным нами ранее middleware
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')
+

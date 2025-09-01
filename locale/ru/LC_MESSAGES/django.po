@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-01 15:04+0400\n"
+"POT-Creation-Date: 2025-09-01 18:00+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,35 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
 #: .\news\views.py:219
 msgid "Hello world"
-msgstr "Привет мир"
+msgstr ""
+
+#: .\templates\flatpages\default.html:36
+msgid "search"
+msgstr "поиск"
+
+#: .\templates\flatpages\default.html:39
+msgid "Post"
+msgstr "Пост"
+
+#: .\templates\flatpages\default.html:42
+msgid "Posts"
+msgstr "Посты"
+
+#: .\templates\flatpages\default.html:45
+msgid "to publish"
+msgstr "Опубликовать"
+
+#: .\templates\flatpages\default.html:50
+msgid "Exit"
+msgstr "Выход"
+
+#: .\templates\flatpages\default.html:53
+msgid "Enter"
+msgstr "Вход"
+
+#: .\templates\flatpages\default.html:59
+msgid "become an author"
+msgstr "Стать автором"

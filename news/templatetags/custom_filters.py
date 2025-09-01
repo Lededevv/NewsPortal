@@ -40,6 +40,9 @@ def censor(value):
        value = value.replace(word_low, word_low[0] + '*' * (len(word) - 1))
    return value
 
-
+@register.filter
+def is_string(value):
+    """Возвращает True, если значение является строкой"""
+    return isinstance(value, str)
 
 
