@@ -152,7 +152,7 @@ LOGGING = {
         },
     }
 }
-fgd
+
 SITE_DOMAIN = 'http://127.0.0.1:8000'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -229,6 +229,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
      'allauth.account.middleware.AccountMiddleware',
+     'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'NewsPaper.urls'
@@ -299,7 +300,7 @@ ACCOUNT_FORMS = {'signup': 'news.forms.BasicSignupForm'}
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -307,6 +308,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+LOCALE_PATH = [
+    os.path.join(BASE_DIR, 'locale')
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

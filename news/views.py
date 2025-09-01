@@ -2,9 +2,11 @@ from datetime import datetime
 from django.core.cache import cache
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.views import View
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import Group
@@ -12,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from .filters import PostFilter
 from .forms import PostForm
 from .models import Post, Category, Author
-
+from django.utils.translation import gettext as _
 
 @login_required
 def unsubscribe_from_category(request, category_id):
@@ -211,3 +213,9 @@ class ArticleDelete(PermissionRequiredMixin, DeleteView):
 #     model = User
 #     form_class = BaseRegisterForm
 #     success_url = '/'
+
+class Index(View):
+    def get(self, request):
+        string = _('Hello world')
+
+        return HttpResponse(string)

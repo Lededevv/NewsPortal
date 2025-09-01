@@ -2,9 +2,10 @@ from django.urls import path
 from django.views.decorators.cache import cache_page
 # Импортируем созданное нами представление
 from .views import PostsList, PostDetail, PostSearch, PostUpdate, ArticleCreate, PostCreate, ArticleUpdate, PostDelete, \
-   ArticleDelete, upgrade_me, subscribe_to_category, unsubscribe_from_category
+   ArticleDelete, upgrade_me, subscribe_to_category, unsubscribe_from_category, Index
 
 urlpatterns = [
+   path('', Index.as_view(), name='index'),
    # path — означает путь.
    # В данном случае путь ко всем товарам у нас останется пустым,
    # чуть позже станет ясно почему.
