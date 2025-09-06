@@ -1,4 +1,9 @@
 from datetime import datetime
+from django.shortcuts import render
+from rest_framework import viewsets
+from rest_framework import permissions
+
+from .serializers import *
 
 import pytz
 from django.core.cache import cache
@@ -265,4 +270,13 @@ class Index(View):
     def post(self, request):
         request.session['django_timezone'] = request.POST['timezone']
         return redirect('/')
+
+class PostViewset(viewsets.ModelViewSet):
+   queryset =Post.objects.all()
+   serializer_class = PostSerializer
+
+
+class AuthorViewset(viewsets.ModelViewSet):
+   queryset = Author.objects.all()
+   serializer_class = AuthorSerializer
 

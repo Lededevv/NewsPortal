@@ -190,6 +190,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.yandex',
      'django_apscheduler',
+     'rest_framework',
 ]
 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
