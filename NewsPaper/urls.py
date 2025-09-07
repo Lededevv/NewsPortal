@@ -20,32 +20,26 @@ from django.views.generic import TemplateView
 from rest_framework import routers
 
 from rest_framework import routers
-from NewsPaper.news.views import AuthorViewset, PostViewset
-
-
+from news.views import AuthorViewset, PostViewset, UserViewset
 
 router = routers.DefaultRouter()
 router.register(r'posts', PostViewset)
 router.register(r'authors', AuthorViewset)
+router.register(r'user', UserViewset)
 
 
 
-urlpatterns = [
-   path('admin/', admin.site.urls),
-   path('', include(router.urls)),
-   path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-]
 
 urlpatterns = [
    path('admin/', admin.site.urls),
    path('pages/', include('django.contrib.flatpages.urls')),
-
+   path('api/', include(router.urls)),
    path('', include('news.urls')),
    path('accounts/', include('allauth.urls')),
    path('swagger-ui/', TemplateView.as_view(
       template_name='swagger-ui.html',
       extra_context={'schema_url': 'openapi-schema'}
    ), name='swagger-ui'),
-path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+   path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 ]

@@ -280,3 +280,7 @@ class AuthorViewset(viewsets.ModelViewSet):
    queryset = Author.objects.all()
    serializer_class = AuthorSerializer
 
+
+class UserViewset(viewsets.ModelViewSet):
+   queryset = User.objects.all()
+   serializer_class = UserSerializer

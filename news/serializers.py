@@ -11,3 +11,8 @@ class AuthorSerializer(serializers.HyperlinkedModelSerializer):
    class Meta:
        model = Author
        fields = ['id', 'user', ]
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+   class Meta:
+       model = User
+       fields = ['id', 'username','email' ]
